@@ -47,7 +47,5 @@ namespace labOneAssignment.StoreItem
             this.bookTitle = bookTitle;
             this.bookAuthor = this.authorLast + ", " + this.authorFirst;
         }
-            // Parameterized constructor in-charge of overloading the variables
-            
     }
 }
