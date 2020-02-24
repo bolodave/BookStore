@@ -47,5 +47,6 @@ namespace labOneAssignment.StoreItem
             this.bookTitle = bookTitle;
             this.bookAuthor = this.authorLast + ", " + this.authorFirst;
         }
+        // Something Something - from Github
     }
 }
