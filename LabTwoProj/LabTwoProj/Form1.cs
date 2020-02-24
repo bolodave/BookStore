@@ -37,6 +37,20 @@ using labOneAssignment.StoreItem;
 ///                                         said order. If yes, clear DataGridView and textboxes (tax, subtotal, total)
 ///                                         will be set back to zero. If no, nothing will happen.
 /// 
+/// *******************************************************************************************************************
+/// 
+/// Lab 2 [Check points]
+/// Goal: Implementation of writing into a text file
+/// 
+///         ~PART #3:
+///                 () -Add using System.IO
+///                 () -Create text file called book.txt to hold book objects
+///                 () -Write a loop to process all books into an ArrayList that comes from the IO
+///                 () -Write statements to load the Combo box with book items
+///                 () -Use a try/catch to handle IO errors
+///                 () -Write order to a file called orders.txt when the complete order button is click add proper IO
+///                     error handling to ensure that no errors will be displayed when writing the information to the file 
+/// 
 /// </summary>
 
 namespace labOneAssignment
