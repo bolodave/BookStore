@@ -7,47 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using labOneAssignment.StoreItem;
+using System.IO;
 
 /// <summary>
 /// 
 /// Developer: Lauren Dominic Bolo-Dave (819088693)
 /// CompE 561 - Professor Shams Al Ajrawi
 /// 
-/// Lab 1 [Check point]
-/// Goal: Create a simple graphical user interface for a book store order form.
-///         ~PART #1:
-///                (Done) -Book Class 
-///                             a) Parameters: Author, ISBN, Price, and Title
-///                (Done) -Hard code 3 book objects; loaded into combo box
-///                (Done) -Text boxes populated when book title selected from combo box
-///                (Done) -Order added into a DataGridView WHEN user types in a quantity(#)
-///         
-///         ~PART #2:
-///                (Done) -Calculate the subtotal, 10% tax, and over all total of user's order
-///                (...)  -Additionally:
-///                            [Done] a) Prompt message box when user presses add title button without
-///                                         a book selected.
-///                            [Done] b) Prompt message box when user does not enter a valid number
-///                                         of books to order when press add title.
-///                            [Done] c) Prompt users to select a book when confirmed button is pressed
-///                                         without any books selected.
-///                            [Done] d) If cancel order button, ask user if they are sure about canceling
-///                                         said order. If yes, clear DataGridView and textboxes (tax, subtotal, total)
-///                                         will be set back to zero. If no, nothing will happen.
-/// 
-/// *******************************************************************************************************************
-/// 
 /// Lab 2 [Check points]
 /// Goal: Implementation of writing into a text file
 /// 
 ///         ~PART #3:
-///                 () -Add using System.IO
-///                 () -Create text file called book.txt to hold book objects
-///                 () -Write a loop to process all books into an ArrayList that comes from the IO
-///                 () -Write statements to load the Combo box with book items
-///                 () -Use a try/catch to handle IO errors
+///                 (Done) -Add using System.IO
+///                 (Done) -Create text file called book.txt to hold book objects
+///                 (Done) -Write a loop to process all books into an ArrayList that comes from the IO
+///                 (Done) -Write statements to load the Combo box with book items
+///                 (Done) -Use a try/catch to handle IO errors
 ///                 () -Write order to a file called orders.txt when the complete order button is click add proper IO
 ///                     error handling to ensure that no errors will be displayed when writing the information to the file 
 /// 
@@ -60,6 +36,9 @@ namespace labOneAssignment
         ///**Initializing Parameters**
         //List of Book objects
         List<Book> booksList = new List<Book>();
+        double readPrice;
+        string readLine;
+        string[] readData;
 
         public Form1()
         {
@@ -76,20 +55,40 @@ namespace labOneAssignment
         /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Initializing new Book objects
-            Book book1 = new Book("Gary", "Keller", "9781885167774", 15.00, "The One Thing");
-            Book book2 = new Book("Greg", "McKeown", "9780753550281", 20.00, "Essentialism: The Disciplined Pursuit of Less");
-            Book book3 = new Book("John", "Flanagan", "9781436123990", 10.00, "Ranger's Apprentice: The Ruins of Gorlan");
-
-            //Adding newly made Book objects into a list
-            booksList.Add(book1);
-            booksList.Add(book2);
-            booksList.Add(book3);
-
-            foreach (Book oBooks in booksList)
+            try
             {
-                comboBox1.Items.Add(oBooks.bookTitle);
+                FileStream file = new FileStream(@"F:\Repos\BookStore\LabTwoProj\books.txt", FileMode.Open, FileAccess.Read);
+                StreamReader read = new StreamReader(file);
+                using (read)
+                {
+                    while(!read.EndOfStream)
+                    {
+                        readLine = read.ReadLine();
+                        readData = readLine.Split(',');
+                        readPrice = Convert.ToDouble(readData[3]);
+                        Book newBook = new Book(readData[0], readData[1], readData[2], readPrice, readData[4]);
+                        booksList.Add(newBook);
+                    }
+                }
+
+                foreach (Book oBooks in booksList)
+                {
+                    comboBox1.Items.Add(oBooks.bookTitle);
+                }
             }
+            catch (IOException)
+            {
+                MessageBox.Show("File not found.");
+            }
+            ////Adding newly made Book objects into a list
+            //booksList.Add(book1);
+            //booksList.Add(book2);
+            //booksList.Add(book3);
+
+            //foreach (Book oBooks in booksList)
+            //{
+            //    comboBox1.Items.Add(oBooks.bookTitle);
+            //}
         }
 
         /// <summary>
